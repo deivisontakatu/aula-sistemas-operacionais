@@ -1,154 +1,267 @@
 # 📘 Estrutura e Arquitetura de um Sistema Operacional
 
-## 🎯 Objetivo da Unidade
+## 📌 Descrição Geral
 
-Compreender **como um Sistema Operacional (SO) é organizado internamente**, identificando seus componentes centrais, os principais modelos arquiteturais e os impactos dessas escolhas no desenvolvimento e na administração de sistemas.
+Esta unidade aborda **a estrutura e a arquitetura interna dos Sistemas
+Operacionais (SO)**, explorando como esses sistemas são organizados
+internamente e como seus componentes cooperam para gerenciar os recursos
+de um computador.
 
----
+O estudo da arquitetura de sistemas operacionais é fundamental para
+compreender:
 
-## 1. Visão Geral da Arquitetura de um SO
+-   Como os programas são executados\
+-   Como o hardware é controlado\
+-   Como os recursos são compartilhados entre aplicações\
+-   Como o sistema mantém estabilidade e segurança
 
-A **arquitetura de um sistema operacional** define a forma como seus componentes internos são organizados e como ocorre a comunicação entre software e hardware. Essa organização influencia diretamente:
+Além disso, entender a organização interna de um sistema operacional
+permite analisar **diferentes modelos arquiteturais**, suas vantagens,
+limitações e aplicações em ambientes reais.
 
-- Desempenho do sistema  
-- Segurança e isolamento de falhas  
-- Facilidade de manutenção e evolução  
-- Estabilidade e escalabilidade  
+------------------------------------------------------------------------
 
-Uma boa arquitetura busca equilibrar **eficiência, segurança e modularidade**.
+# 🎯 Objetivo da Unidade
 
----
+Ao final desta unidade, o estudante deverá ser capaz de:
 
-## 2. Kernel: o Núcleo do Sistema Operacional
+-   Compreender **como um sistema operacional é estruturado
+    internamente**
+-   Identificar o papel do **kernel**
+-   Diferenciar **modo usuário e modo kernel**
+-   Entender o funcionamento de **processos e memória**
+-   Compreender o papel dos **drivers de dispositivos**
+-   Identificar diferentes **arquiteturas de sistemas operacionais**
+-   Entender como aplicações interagem com o sistema operacional
 
-O **kernel** é o componente central do sistema operacional. Ele é responsável por controlar o hardware e fornecer serviços essenciais para os programas.
+------------------------------------------------------------------------
 
-### Principais responsabilidades do kernel
+# 🧱 1. Visão Geral da Arquitetura de um Sistema Operacional
 
-- Gerenciamento de processos e threads  
-- Gerenciamento de memória (alocação e proteção)  
-- Controle de dispositivos de entrada e saída  
-- Comunicação entre software e hardware  
+A **arquitetura de um sistema operacional** define a forma como seus
+componentes são organizados e como ocorre a comunicação entre:
 
-O kernel é executado em **modo privilegiado**, tendo acesso total aos recursos do sistema.
+-   Hardware\
+-   Kernel\
+-   Programas de sistema\
+-   Aplicações do usuário
 
----
+Essa estrutura influencia diretamente diversos aspectos do sistema.
 
-## 3. Modos de Operação: Usuário e Kernel
+### Impactos da arquitetura
 
-Para aumentar a segurança e a estabilidade, os sistemas operacionais utilizam dois modos de execução distintos.
+Uma boa arquitetura afeta diretamente:
 
-### Modo Usuário
+-   Desempenho do sistema\
+-   Segurança e proteção de memória\
+-   Estabilidade do ambiente computacional\
+-   Facilidade de manutenção e atualização\
+-   Escalabilidade do sistema
 
-- Executa aplicações comuns  
-- Acesso limitado aos recursos do sistema  
-- Erros não comprometem todo o SO  
+Por isso, o projeto de um sistema operacional envolve decisões
+importantes sobre **organização modular e separação de
+responsabilidades**.
 
-### Modo Kernel
+------------------------------------------------------------------------
 
-- Executa o kernel e componentes críticos  
-- Acesso irrestrito ao hardware e à memória  
-- Falhas podem causar travamentos do sistema  
+# 🧠 2. Kernel: o Núcleo do Sistema Operacional
 
-Essa separação impede que programas maliciosos ou defeituosos afetem diretamente o sistema.
+O **kernel** é o componente central de um sistema operacional.
 
----
+Ele funciona como o **intermediário entre hardware e software**, sendo
+responsável por controlar todos os recursos do computador.
 
-## 4. Comunicação com o Hardware
+Sem o kernel, os programas não teriam acesso organizado ao hardware.
 
-### Chamadas de Sistema
+------------------------------------------------------------------------
 
-As **chamadas de sistema** permitem que programas em modo usuário solicitem serviços ao kernel, como:
+## Principais responsabilidades do kernel
 
-- Criar e encerrar processos  
-- Acessar arquivos e dispositivos  
-- Alocar memória  
+Entre as principais funções do kernel estão:
 
-Elas representam a **interface oficial entre aplicações e o SO**.
+-   Gerenciamento de processos
+-   Gerenciamento de memória
+-   Controle de dispositivos de entrada e saída
+-   Gerenciamento do sistema de arquivos
+-   Comunicação entre hardware e software
+-   Implementação de mecanismos de segurança
 
-### Interrupções
+O kernel possui acesso completo ao sistema, pois opera em **modo
+privilegiado**.
 
-As **interrupções** são sinais que informam ao processador que um evento ocorreu, como:
-- Finalização de uma operação de E/S  
-- Eventos de tempo (timer)  
-- Erros de hardware  
+------------------------------------------------------------------------
 
-Elas garantem respostas rápidas e eficientes do sistema operacional.
+# 🔁 3. Processos
 
----
+Um **processo** é um programa em execução.
 
-## 5. Drivers e Gerenciamento de Recursos
+Cada processo possui seu próprio conjunto de recursos e informações.
 
-Os **drivers de dispositivos** permitem que o SO se comunique com diferentes tipos de hardware, abstraindo suas particularidades.
+## Componentes de um processo
 
-O **gerenciamento de recursos** envolve:
-- Distribuição da CPU entre processos  
-- Controle do uso da memória  
-- Coordenação de dispositivos e armazenamento  
+-   Código do programa
+-   Dados
+-   Pilha de execução
+-   Registradores da CPU
+-   Arquivos abertos
+-   Estado do processo
 
-O objetivo é garantir uso **eficiente, justo e seguro** dos recursos disponíveis.
+## Multiprogramação
 
----
+Sistemas modernos executam **múltiplos processos simultaneamente**,
+alternando rapidamente o uso da CPU entre eles.
 
-## 6. Principais Arquiteturas de Sistemas Operacionais
+------------------------------------------------------------------------
 
-### Arquitetura Monolítica
+# 📋 Tabela de Processos
 
-- A maioria dos serviços roda dentro do kernel  
-- Comunicação direta entre componentes  
+O sistema operacional mantém uma estrutura chamada **Tabela de
+Processos**, contendo:
 
-**Vantagens:**  
-- Alto desempenho  
-- Menor sobrecarga de comunicação  
+-   PID (identificador do processo)
+-   estado do processo
+-   registradores
+-   ponteiros de memória
+-   arquivos abertos
 
-**Desvantagens:**  
-- Menor modularidade  
-- Falhas podem afetar todo o sistema  
+Essa estrutura permite suspender e retomar processos corretamente.
 
----
+------------------------------------------------------------------------
 
-### Microkernel
+# 🧠 4. Espaço de Endereçamento
 
-- Apenas funções essenciais permanecem no kernel  
-- Serviços como drivers e sistemas de arquivos rodam em modo usuário  
+Cada processo possui um **espaço de memória próprio** contendo:
 
-**Vantagens:**  
-- Maior segurança e isolamento  
-- Alta modularidade  
+-   código executável
+-   variáveis
+-   pilha
+-   heap
 
-**Desvantagens:**  
-- Comunicação mais lenta  
-- Maior complexidade  
+Representação simplificada:
 
----
+0 ------------------------------ MAX
 
-### Arquitetura Híbrida
+## Proteção de memória
 
-- Combina características das duas abordagens  
-- Busca equilíbrio entre desempenho e segurança  
+A proteção garante que processos não interfiram entre si e que não
+possam modificar o kernel.
 
-Exemplos práticos incluem sistemas amplamente utilizados no mercado.
+------------------------------------------------------------------------
 
----
+# 💾 5. Memória Virtual
 
-## 7. Impactos da Arquitetura
+A memória virtual permite executar programas maiores que a RAM
+disponível.
 
-### Para o Programador
+Parte dos dados fica:
 
-- Define como aplicações interagem com o sistema  
-- Influencia desempenho e chamadas de sistema disponíveis  
-- Afeta portabilidade e segurança do software  
+-   na RAM
+-   no disco
 
-### Para o Administrador de Sistemas
+O sistema operacional move dados entre esses dois locais conforme
+necessário.
 
-- Impacta manutenção e atualização  
-- Influencia estabilidade e recuperação de falhas  
-- Afeta políticas de segurança e controle de acesso  
+------------------------------------------------------------------------
 
----
+# 📂 6. Sistema de Arquivos
 
-## 📚 Considerações Finais
+O sistema de arquivos organiza dados em dispositivos de armazenamento.
 
-A arquitetura de um Sistema Operacional é determinante para seu funcionamento interno. Compreender o papel do kernel, os modos de execução e os modelos arquiteturais permite uma visão crítica sobre desempenho, segurança e estabilidade dos sistemas modernos.
+## Operações comuns
 
-Este conteúdo fornece a base necessária para o estudo aprofundado de processos, concorrência, memória virtual e sistemas de arquivos.
+-   criar arquivos
+-   abrir arquivos
+-   ler dados
+-   escrever dados
+-   remover arquivos
+
+## Estrutura de diretórios
+
+/ ├── usuarios │ └── aluno │ └── documentos │ └── trabalho.txt
+
+------------------------------------------------------------------------
+
+# 🔌 7. Entrada e Saída
+
+Dispositivos de E/S incluem:
+
+-   teclado
+-   monitor
+-   mouse
+-   disco
+-   impressora
+-   rede
+
+O sistema operacional controla esses dispositivos por meio de
+**drivers**.
+
+------------------------------------------------------------------------
+
+# 🧩 8. Drivers de Dispositivo
+
+Drivers são programas que permitem comunicação entre o sistema
+operacional e hardware específico.
+
+Eles abstraem as diferenças entre dispositivos.
+
+------------------------------------------------------------------------
+
+# 🏗️ 9. Arquiteturas de Sistemas Operacionais
+
+## Arquitetura Monolítica
+
+Todos os serviços executam dentro do kernel.
+
+Vantagens:
+
+-   alto desempenho
+
+Desvantagens:
+
+-   menor isolamento de falhas
+
+------------------------------------------------------------------------
+
+## Microkernel
+
+Apenas funções essenciais permanecem no kernel.
+
+Serviços adicionais executam em modo usuário.
+
+Vantagens:
+
+-   maior segurança
+-   modularidade
+
+Desvantagens:
+
+-   maior custo de comunicação
+
+------------------------------------------------------------------------
+
+## Arquitetura Híbrida
+
+Combina características de monolítico e microkernel.
+
+Exemplos:
+
+-   Windows
+-   macOS
+
+------------------------------------------------------------------------
+
+# 📚 Considerações Finais
+
+A arquitetura de um sistema operacional determina como os recursos do
+computador são organizados e controlados.
+
+Compreender conceitos como:
+
+-   kernel
+-   processos
+-   memória
+-   sistema de arquivos
+-   drivers
+-   arquiteturas de kernel
+
+permite entender profundamente o funcionamento de sistemas modernos.
